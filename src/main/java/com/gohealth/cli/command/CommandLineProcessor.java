@@ -10,7 +10,7 @@ import org.apache.commons.cli.ParseException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandLineStartupRunner {
+public class CommandLineProcessor {
     public void process (String... args) throws Exception {
 
         Options options = setOptions();
