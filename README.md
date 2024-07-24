@@ -10,16 +10,16 @@ call directly from console
 
 
 Usage:
-  cli-0.0.1-SNAPSHOT.jar -a [-p <parent>] [-d <desc>] [-l <link>]
-  cli-0.0.1-SNAPSHOT.jar -c [-i <issue_id>]
+  `cli-0.0.1-SNAPSHOT.jar -a [-p <parent>] [-d <desc>] [-l <link>]`
+  `cli-0.0.1-SNAPSHOT.jar -c [-i <issue_id>]`
 
 usage: cli-0.0.1-SNAPSHOT.jar
- -a,--add            add record operation
- -c,--close          close record operation
- -d,--desc <arg>     Description
- -i,--id <arg>       Issue to be closed
- -l,--link <arg>     URL to the log
- -p,--parent <arg>   Parent issue ID
+ `-a,--add            add record operation`
+ `-c,--close          close record operation`
+ `-d,--desc <arg>     Description`
+ `-i,--id <arg>       Issue to be closed`
+ `-l,--link <arg>     URL to the log`
+ `-p,--parent <arg>   Parent issue ID`
 
 
 
