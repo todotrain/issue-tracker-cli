@@ -7,13 +7,11 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandLineStartupRunner implements CommandLineRunner {
-    @Override
-    public void run (String... args) throws Exception {
+public class CommandLineStartupRunner {
+    public void process (String... args) throws Exception {
 
         Options options = setOptions();
 
