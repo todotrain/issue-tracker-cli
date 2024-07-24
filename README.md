@@ -1,5 +1,9 @@
 Issue tracker cli
 
+Download Requirements
+- Java 17 sdk
+- Maven
+
 call directly from console
     `mvn clean package`
     `java -jar .\target\cli-0.0.1-SNAPSHOT.jar parameters`
