@@ -8,9 +8,9 @@ call directly from console
 Parameters
 -------------------------------------------
 For creating a new issue use the following parameters
- -p,--parent <arg>   Parent issue ID
- -d,--desc <arg>     Description
- -l,--link <arg>     URL to the log
+`-p,--parent <arg>   Parent issue ID`
+`-d,--desc <arg>     Description`
+`-l,--link <arg>     URL to the log`
 
 For closing an existing issue 
- -c,--close <arg>    Issue to be closed
+`-c,--close <arg>    Issue to be closed`
