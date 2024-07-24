@@ -23,55 +23,58 @@ public class CommandLineProcessor {
 
         Options options = setOptions();
         CommandLineParser parser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
 
-        if (args.length == 0){
-            System.out.println("No argument provided");
-            formatter.printHelp(COMMAND_ALIAS, options); //todo replace with more accurate instructions
-            return new Command("error", null);
-        }
-
         try {
+            if (args.length == 0) {
+                throw new ParseException("No arguments provided");
+            }
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
+            op = "error";
+            printCustomHelp(options);
             System.out.println(e.getMessage());
-            formatter.printHelp(COMMAND_ALIAS, options);
-            return new Command("error", null);
+            return new Command("error", params);
         }
         
-        if (cmd.hasOption("p")) {
+        if (cmd.hasOption("a")){
             op = "add";
-            params.put("p", cmd.getOptionValue("p"));
-        }
-
-        if (cmd.hasOption("d")) {
-            op = "add";
-            params.put("d", cmd.getOptionValue("d"));
-        }
-
-        if (cmd.hasOption("l")) {
-            op = "add";
-            params.put("l", cmd.getOptionValue("l"));
-        }
-
-        if (cmd.hasOption("c")) {
-            if (op.equals("add")){
-                System.out.println("Close parameter provided with excess parameters");
-                formatter.printHelp(COMMAND_ALIAS, options); //todo replace with more accurate instructions
-                return new Command("error", null);
+            if (cmd.hasOption("p")) {
+                params.put("p", cmd.getOptionValue("p"));
+            }
+    
+            if (cmd.hasOption("d")) {
+                params.put("d", cmd.getOptionValue("d"));
+            }
+    
+            if (cmd.hasOption("l")) {
+                params.put("l", cmd.getOptionValue("l"));
             }
 
-            params.put("c", cmd.getOptionValue("c"));
+        } else if (cmd.hasOption("c")){
             op = "close";
+            if (cmd.hasOption("i")) {
+                params.put("i", cmd.getOptionValue("i"));
+            }
+        } else {
+            op = "error";
+            printCustomHelp(options);
+            System.out.println("Must pick at least one operation (-add or -close)");
         }
 
         return new Command(op, params);
     }
 
-    //todo consider adding a param without argument just for the op
-    public Options setOptions(){
+    private Options setOptions(){
         Options options = new Options();
+
+        Option addOption = new Option("a", "add", false, "add record operation");
+        addOption.setRequired(false);
+        options.addOption(addOption);
+
+        Option closeOption = new Option("c", "close", false, "close record operation");
+        closeOption.setRequired(false);
+        options.addOption(closeOption);
 
         Option parentOption = new Option("p", "parent", true, "Parent issue ID");
         parentOption.setRequired(false);
@@ -85,10 +88,22 @@ public class CommandLineProcessor {
         linkOption.setRequired(false);
         options.addOption(linkOption);
 
-        Option closeOption = new Option("c", "close", true, "Issue to be closed");
-        closeOption.setRequired(false);
-        options.addOption(closeOption);
+        Option issueIdOption = new Option("i", "id", true, "Issue to be closed");
+        issueIdOption.setRequired(false);
+        options.addOption(issueIdOption);
         
         return options;
+    }
+    
+    //todo upgrade formatting
+    private void printCustomHelp(Options options) {
+        
+        System.out.println("Usage:");
+        System.out.println("  " + COMMAND_ALIAS + " -a [-p <parent>] [-d <desc>] [-l <link>]");
+        System.out.println("  " + COMMAND_ALIAS + " -c [-i <issue_id>]");
+        System.out.println();
+        
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp(COMMAND_ALIAS, options); 
     }
 }
