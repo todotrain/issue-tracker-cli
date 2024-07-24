@@ -16,4 +16,32 @@ public class CommandLineProcessorTest {
         assertEquals("error", cmd.operation());
         assertEquals(true, cmd.params().isEmpty());
     }
+    
+    @Test
+    public void testAddHappyPath() throws Exception {
+        String[] arrayArgs = {"-a", "-d", "test description", "-l", "testLink.com"};
+        Command cmd = commandLineProcessor.getCommand(arrayArgs);
+        assertEquals("add", cmd.operation());
+        assertEquals(false, cmd.params().isEmpty());
+        //todo verify actual contents
+    }
+    
+    @Test
+    public void testAddHappyPathWithParentId() throws Exception {
+        String[] arrayArgs = {"-a", "-p", "123456", "-d", "test description", "-l", "testLink.com"};
+        Command cmd = commandLineProcessor.getCommand(arrayArgs);
+        assertEquals("add", cmd.operation());
+        assertEquals(false, cmd.params().isEmpty());
+        //todo verify actual contents
+    }
+
+    @Test
+    public void testAddWithoutArguments() throws Exception {
+        String[] arrayArgs = {"-a"};
+        Command cmd = commandLineProcessor.getCommand(arrayArgs);
+        assertEquals("error", cmd.operation());
+        assertEquals(true, cmd.params().isEmpty());
+    }
+    
+
 }

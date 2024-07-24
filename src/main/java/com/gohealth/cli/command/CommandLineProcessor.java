@@ -36,7 +36,8 @@ public class CommandLineProcessor {
             System.out.println(e.getMessage());
             return new Command("error", params);
         }
-        
+
+        //todo refactor with validator and builder?
         if (cmd.hasOption("a")){
             op = "add";
             if (cmd.hasOption("p")) {
@@ -45,16 +46,24 @@ public class CommandLineProcessor {
     
             if (cmd.hasOption("d")) {
                 params.put("d", cmd.getOptionValue("d"));
+            } else {
+                op = "error";
+                System.out.println("Must provide a description for the issue");
             }
     
             if (cmd.hasOption("l")) {
                 params.put("l", cmd.getOptionValue("l"));
+            } else {
+                op = "error";
+                System.out.println("Must provide a link for the issue");
             }
-
         } else if (cmd.hasOption("c")){
             op = "close";
             if (cmd.hasOption("i")) {
                 params.put("i", cmd.getOptionValue("i"));
+            } else {
+                op = "error";
+                System.out.println("Must provide an issue ID to close");
             }
         } else {
             op = "error";
