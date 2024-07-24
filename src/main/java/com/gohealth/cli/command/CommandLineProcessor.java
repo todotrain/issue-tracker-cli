@@ -1,5 +1,8 @@
 package com.gohealth.cli.command;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -11,43 +14,62 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandLineProcessor {
-    public void process (String... args) throws Exception {
+
+    private static final String COMMAND_ALIAS = "cli-0.0.1-SNAPSHOT.jar"; //todo update name once we figure out an alias
+
+    public Command getCommand (String... args) throws Exception {
+        String op = "none";
+        Map<String, String> params = new HashMap<>();
 
         Options options = setOptions();
-
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
-        try {
-            if (args.length == 0){
-                throw new ParseException("No arguments provided");
-            }
 
+        if (args.length == 0){
+            System.out.println("No argument provided");
+            formatter.printHelp(COMMAND_ALIAS, options); //todo replace with more accurate instructions
+            return new Command("error", null);
+        }
+
+        try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("cli-0.0.1-SNAPSHOT.jar", options); //todo update name once we figure out an alias
-            return;
+            formatter.printHelp(COMMAND_ALIAS, options);
+            return new Command("error", null);
         }
-
+        
         if (cmd.hasOption("p")) {
-            System.out.println("Parent Issue ID: " + cmd.getOptionValue("p"));
+            op = "add";
+            params.put("p", cmd.getOptionValue("p"));
         }
 
         if (cmd.hasOption("d")) {
-            System.out.println("Description: " + cmd.getOptionValue("d"));
+            op = "add";
+            params.put("d", cmd.getOptionValue("d"));
         }
 
         if (cmd.hasOption("l")) {
-            System.out.println("URL: " + cmd.getOptionValue("l"));
+            op = "add";
+            params.put("l", cmd.getOptionValue("l"));
         }
 
-        //todo make sure to make sure this option isn't used in conjunction with other options
         if (cmd.hasOption("c")) {
-            System.out.println("Issue to be closed: " + cmd.getOptionValue("c"));
+            if (op.equals("add")){
+                System.out.println("Close parameter provided with excess parameters");
+                formatter.printHelp(COMMAND_ALIAS, options); //todo replace with more accurate instructions
+                return new Command("error", null);
+            }
+
+            params.put("c", cmd.getOptionValue("c"));
+            op = "close";
         }
+
+        return new Command(op, params);
     }
 
+    //todo consider adding a param without argument just for the op
     public Options setOptions(){
         Options options = new Options();
 
