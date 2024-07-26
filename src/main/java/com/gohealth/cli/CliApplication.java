@@ -34,9 +34,26 @@ public class CliApplication implements CommandLineRunner{
 		Gson gson = new Gson();
 
 		try {
-			List<String[]> records = csvService.readAllLines("./data/issues.csv");
+			String filePath = "./data/issues.csv";
+			List<String[]> records = csvService.readAllLines(filePath);
+			
+			if (cmd.operation().equals("add")){
+				String parentId = cmd.params().getOrDefault("p", "");
+				String description = cmd.params().getOrDefault("d", "");
+				String link = cmd.params().getOrDefault("l", "");
+				
+				String newId = "1";
+				if (records.size() > 1) {
+					newId = String.valueOf(Integer.parseInt(records.get(records.size()-1)[0])+1);
+				}
+
+				records.add(new String[]{newId, description, parentId, "Open", "2024-07-26T11:02", link});
+				csvService.writeCsv(records, filePath);
+			}
+
 			System.out.println(gson.toJson(records));
 		} catch (Exception e) {
+			System.out.println("csv issue");
             System.out.println(e.getMessage());
         }
 
