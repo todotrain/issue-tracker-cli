@@ -6,12 +6,12 @@ Download Requirements
 
 call directly from console
     `mvn clean package`
-    `java -jar .\target\cli-0.0.1-SNAPSHOT.jar parameters`
+    `java -jar .\target\cli.jar parameters`
 
 
 Usage:
-- `cli-0.0.1-SNAPSHOT.jar -a [-p <parent>] [-d <desc>] [-l <link>]`
-- `cli-0.0.1-SNAPSHOT.jar -c [-i <issue_id>]`
+- `cli.jar -a [-p <parent>] [-d <desc>] [-l <link>]`
+- `cli.jar -c [-i <issue_id>]`
 
 usage: cli-0.0.1-SNAPSHOT.jar
 - `-a,--add            add record operation`

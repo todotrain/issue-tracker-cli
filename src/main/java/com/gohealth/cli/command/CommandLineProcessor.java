@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommandLineProcessor {
 
-    private static final String COMMAND_ALIAS = "cli-0.0.1-SNAPSHOT.jar"; //todo update name once we figure out an alias
+    private static final String COMMAND_ALIAS = "cli.jar";
 
     public Command getCommand (String... args) throws Exception {
         String op = "none";
