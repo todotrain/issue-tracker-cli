@@ -1,3 +1,4 @@
 "ID","Description","ParentId","Status","CreationTimestamp","Link"
 "1","Dockerize application","","Open","2024-07-26T11:02","aol.com"
 "2","implement facade for csv","","Open","2024-07-26T11:02","aol.com"
+"3","add basic close issue functionality","","Closed","2024-07-26T11:02","aol.com"

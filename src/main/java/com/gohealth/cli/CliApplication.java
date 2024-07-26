@@ -1,6 +1,7 @@
 package com.gohealth.cli;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -49,9 +50,19 @@ public class CliApplication implements CommandLineRunner{
 
 				records.add(new String[]{newId, description, parentId, "Open", "2024-07-26T11:02", link});
 				csvService.writeCsv(records, filePath);
-			}
+			} else if (cmd.operation().equals("close")){
+				String issueId = cmd.params().getOrDefault("i", "");
 
-			System.out.println(gson.toJson(records));
+				Optional<String[]> optionalRecord = records.stream().filter(record -> record[0].equals(issueId)).findFirst();
+				if (optionalRecord.isPresent()){
+					optionalRecord.get()[3] = "Closed";
+					System.out.println("found issueId: " + issueId);
+				} else {
+					System.out.println("could not find issueId: " + issueId);
+				}
+
+				csvService.writeCsv(records, filePath);
+			}
 		} catch (Exception e) {
 			System.out.println("csv issue");
             System.out.println(e.getMessage());
