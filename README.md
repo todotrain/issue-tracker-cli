@@ -1,12 +1,10 @@
 Issue tracker cli
 
-Download Requirements
-- Java 17 sdk
-- Maven
-
 call directly from console
-    `mvn clean package`
-    `java -jar .\target\cli.jar parameters`
+    `docker build -t cli .`
+- `docker run -it --rm -v C:/Users/edsho/Documents/cli/data:/app/data cli -a [-p <parent>] [-d <desc>] [-l <link>]`
+- or
+-  `docker run -it --rm -v C:/Users/edsho/Documents/cli/data:/app/data cli -c [-i <issue_id>]`
 
 
 Usage:
