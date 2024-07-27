@@ -2,9 +2,9 @@ Issue tracker cli
 
 call directly from console
     `docker build -t cli .`
-- `docker run -it --rm -v C:/Users/edsho/Documents/cli/data:/app/data cli -a [-p <parent>] [-d <desc>] [-l <link>]`
+- `docker run -it --rm -v <fullPathTo cli/data>:/app/data cli -a [-p <parent>] [-d <desc>] [-l <link>]`
 - or
--  `docker run -it --rm -v C:/Users/edsho/Documents/cli/data:/app/data cli -c [-i <issue_id>]`
+-  `docker run -it --rm -v <fullPathTo cli/data>:/app/data cli -c [-i <issue_id>]`
 
 
 Usage:
