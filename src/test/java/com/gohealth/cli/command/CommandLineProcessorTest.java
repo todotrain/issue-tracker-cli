@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 public class CommandLineProcessorTest {
     CommandLineProcessor commandLineProcessor = new CommandLineProcessor();
     
-    //todo finish implementing
     @Test
     public void testNoArguments() throws Exception {
         String[] arrayArgs = {};
@@ -23,7 +22,6 @@ public class CommandLineProcessorTest {
         Command cmd = commandLineProcessor.getCommand(arrayArgs);
         assertEquals("add", cmd.operation());
         assertEquals(false, cmd.params().isEmpty());
-        //todo verify actual contents
     }
     
     @Test
@@ -32,7 +30,6 @@ public class CommandLineProcessorTest {
         Command cmd = commandLineProcessor.getCommand(arrayArgs);
         assertEquals("add", cmd.operation());
         assertEquals(false, cmd.params().isEmpty());
-        //todo verify actual contents
     }
 
     @Test

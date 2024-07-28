@@ -37,7 +37,6 @@ public class CommandLineProcessor {
             return new Command("error", params);
         }
 
-        //todo refactor with validator and builder?
         if (cmd.hasOption("a")){
             op = "add";
             if (cmd.hasOption("p")) {
@@ -104,7 +103,6 @@ public class CommandLineProcessor {
         return options;
     }
     
-    //todo upgrade formatting
     private void printCustomHelp(Options options) {
         
         System.out.println("Usage:");
