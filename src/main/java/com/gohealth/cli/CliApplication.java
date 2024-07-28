@@ -1,5 +1,7 @@
 package com.gohealth.cli;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +50,10 @@ public class CliApplication implements CommandLineRunner{
 					newId = String.valueOf(Integer.parseInt(records.get(records.size()-1)[0])+1);
 				}
 
-				records.add(new String[]{newId, description, parentId, "Open", "2024-07-26T11:02", link});
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm").withZone(java.time.ZoneOffset.UTC);
+				String now = LocalDateTime.now().format(formatter);
+				records.add(new String[]{newId, description, parentId, "Open", now, link});
+
 				csvService.writeCsv(records, filePath);
 			} else if (cmd.operation().equals("close")){
 				String issueId = cmd.params().getOrDefault("i", "");
