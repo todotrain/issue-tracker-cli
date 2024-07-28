@@ -31,11 +31,7 @@ public class CliApplication implements CommandLineRunner{
 	@Override
 	public void run(String ...args) throws Exception{
 		Command cmd = commandLineProcessor.getCommand(args);
-
 		
-
-		Gson gson = new Gson();
-
 		try {
 			String filePath = "./data/issues.csv";
 			List<String[]> records = csvService.readAllLines(filePath);
@@ -54,6 +50,7 @@ public class CliApplication implements CommandLineRunner{
 				String now = LocalDateTime.now().format(formatter);
 				records.add(new String[]{newId, description, parentId, "Open", now, link});
 
+				System.out.println("Created issue with ID: " + newId);
 				csvService.writeCsv(records, filePath);
 			} else if (cmd.operation().equals("close")){
 				String issueId = cmd.params().getOrDefault("i", "");
@@ -61,7 +58,7 @@ public class CliApplication implements CommandLineRunner{
 				Optional<String[]> optionalRecord = records.stream().filter(record -> record[0].equals(issueId)).findFirst();
 				if (optionalRecord.isPresent()){
 					optionalRecord.get()[3] = "Closed";
-					System.out.println("found issueId: " + issueId);
+					System.out.println("Closed issue: " + issueId);
 				} else {
 					System.out.println("could not find issueId: " + issueId);
 				}
@@ -72,8 +69,6 @@ public class CliApplication implements CommandLineRunner{
 			System.out.println("csv issue");
             System.out.println(e.getMessage());
         }
-
-		System.out.println(gson.toJson(cmd));
 	}
 
 }
