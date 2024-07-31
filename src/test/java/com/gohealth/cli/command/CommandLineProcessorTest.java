@@ -113,4 +113,19 @@ public class CommandLineProcessorTest {
         assertEquals(true, cmd.params().isEmpty());
     }
     
+    @Test
+    public void testMultipleOperationsGiven() {
+        String[] arrayArgs = {"-c", "-i", "1", "-a", "-p", "123456", "-d", "test description", "-l", "testLink.com"};
+        Command cmd = commandLineProcessor.getCommand(arrayArgs);
+        assertEquals("error", cmd.operation());
+        assertEquals(true, cmd.params().isEmpty());
+    }
+    
+    @Test
+    public void testInvalidParametersGiven() {
+        String[] arrayArgs = {"-a", "-p", "123456", "-d", "test description", "-l", "testLink.com", "-z", "bfao"};
+        Command cmd = commandLineProcessor.getCommand(arrayArgs);
+        assertEquals("error", cmd.operation());
+        assertEquals(true, cmd.params().isEmpty());
+    }
 }

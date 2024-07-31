@@ -36,8 +36,12 @@ public class CommandLineProcessor {
             System.out.println(e.getMessage());
             return new Command("error", params);
         }
-
-        if (cmd.hasOption("a")){
+        
+        if (cmd.hasOption("a") && cmd.hasOption("c")){
+            op = "error";
+            printCustomHelp(options);
+            System.out.println("Please pick either add or close (-a or -c)");
+        } else if (cmd.hasOption("a")){
             op = "add";
             if (cmd.hasOption("p")) {
                 params.put("p", cmd.getOptionValue("p"));
