@@ -17,7 +17,7 @@ public class CommandLineProcessor {
 
     private static final String COMMAND_ALIAS = "cli.jar";
 
-    public Command getCommand (String... args) throws Exception {
+    public Command getCommand (String... args) {
         String op = "none";
         Map<String, String> params = new HashMap<>();
 
