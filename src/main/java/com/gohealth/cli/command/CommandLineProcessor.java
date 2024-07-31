@@ -31,50 +31,67 @@ public class CommandLineProcessor {
             }
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            op = "error";
             printCustomHelp(options);
             System.out.println(e.getMessage());
             return new Command("error", params);
         }
         
         if (cmd.hasOption("a") && cmd.hasOption("c")){
-            op = "error";
             printCustomHelp(options);
-            System.out.println("Please pick either add or close (-a or -c)");
-        } else if (cmd.hasOption("a")){
-            op = "add";
-            if (cmd.hasOption("p")) {
-                params.put("p", cmd.getOptionValue("p"));
-            }
-    
-            if (cmd.hasOption("d")) {
-                params.put("d", cmd.getOptionValue("d"));
-            } else {
-                op = "error";
-                System.out.println("Must provide a description for the issue");
-            }
-    
-            if (cmd.hasOption("l")) {
-                params.put("l", cmd.getOptionValue("l"));
-            } else {
-                op = "error";
-                System.out.println("Must provide a link for the issue");
-            }
-        } else if (cmd.hasOption("c")){
-            op = "close";
-            if (cmd.hasOption("i")) {
-                params.put("i", cmd.getOptionValue("i"));
-            } else {
-                op = "error";
-                System.out.println("Must provide an issue ID to close");
-            }
-        } else {
-            op = "error";
-            printCustomHelp(options);
-            System.out.println("Must pick at least one operation (-add or -close)");
+            System.out.println("Please pick either add or close (-add or -close)");
+            return new Command("error", params);
+        }
+        
+        if (cmd.hasOption("a")){
+            return handleAddOperation(cmd);
+        }
+        
+        if (cmd.hasOption("c")){
+            return handleCloseOperation(cmd);
         }
 
+        op = "error";
+        printCustomHelp(options);
+        System.out.println("Must pick at least one operation (-add or -close)");
         return new Command(op, params);
+    }
+
+    
+    private Command handleAddOperation(CommandLine cmd){
+        Map<String, String> params = new HashMap<>();
+
+        if (cmd.hasOption("p")) {
+            params.put("p", cmd.getOptionValue("p"));
+        }
+
+        if (cmd.hasOption("d")) {
+            params.put("d", cmd.getOptionValue("d"));
+        } else {
+            System.out.println("Must provide a description for the issue");
+            return new Command("error", params);
+        }
+
+        if (cmd.hasOption("l")) {
+            params.put("l", cmd.getOptionValue("l"));
+        } else {
+            System.out.println("Must provide a link for the issue");
+            return new Command("error", params);
+        }
+        
+        return new Command("add", params);
+    }
+
+    private Command handleCloseOperation(CommandLine cmd){
+        Map<String, String> params = new HashMap<>();
+
+        if (cmd.hasOption("i")) {
+            params.put("i", cmd.getOptionValue("i"));
+        } else {
+            System.out.println("Must provide an issue ID to close");
+            return new Command("error", params);
+        }
+
+        return new Command("close", params);
     }
 
     private Options setOptions(){

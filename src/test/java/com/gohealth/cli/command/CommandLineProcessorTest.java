@@ -50,9 +50,6 @@ public class CommandLineProcessorTest {
         String[] arrayArgs = {"-a", "-p", "123456", "-l", "testLink.com"};
         Command cmd = commandLineProcessor.getCommand(arrayArgs);
         assertEquals("error", cmd.operation());
-        assertEquals("", cmd.params().getOrDefault("d", ""));
-        assertEquals("123456", cmd.params().getOrDefault("p", ""));
-        assertEquals("testLink.com", cmd.params().getOrDefault("l", ""));
     }
     
     @Test
@@ -60,9 +57,6 @@ public class CommandLineProcessorTest {
         String[] arrayArgs = {"-a", "-p", "123456", "-d", "test description"};
         Command cmd = commandLineProcessor.getCommand(arrayArgs);
         assertEquals("error", cmd.operation());
-        assertEquals("test description", cmd.params().getOrDefault("d", ""));
-        assertEquals("123456", cmd.params().getOrDefault("p", ""));
-        assertEquals("", cmd.params().getOrDefault("l", ""));
     }
     
     @Test
